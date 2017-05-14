@@ -52,7 +52,7 @@ exports.clean = function(file, savedFile, options) {
       }
       
       tweet = tweet.replace('\r', '')
-          .replace(/RT\s+/g, 'aaa')
+          .replace(/RT\s+/g, '')
           .replace('&amp;', '')
           .replace('&lt;', '')
           .replace(/#/g, '')

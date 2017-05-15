@@ -36,7 +36,8 @@ exports.clean = function(file, savedFile, options) {
 
     var tweets = data.split('\n');
     var result = [];
-    tweets = removeDuplicates(tweets);
+    console.log('before',tweets.length)
+
     for (var i = 0; i < tweets.length; i++) {
       var tweet = tweets[i]
       if (filter.mentions) {
@@ -47,7 +48,6 @@ exports.clean = function(file, savedFile, options) {
         tweet = tweet.replace(/(^|\s)(:D|:\/|:\)+|;\)|:-\))(?=\s|[^[:alnum:]+-]|$)/g,'')
       }
       if (filter.links) {
-        //console.log(filter.links)
         tweet = tweet.replace(/(?:https?):\/\/[\n\S]+/g, '')
       }
       
@@ -55,21 +55,26 @@ exports.clean = function(file, savedFile, options) {
           .replace(/RT\s+/g, '')
           .replace('&amp;', '')
           .replace('&lt;', '')
+          .replace('&gt;', '')
+          .replace(/&gt;+/g,'')
           .replace(/#/g, '')
           .replace(/\s+/g, ' ').trim()
 
-        var words = tweet.split(' ');
-      
-        if (words.length > 1) {
+        result.push(tweet);
+    }
+
+    result = removeDuplicates(result);
+    console.log('after', result.length)
+    for (var i = 0; i < result.length; i++) {
+      tweet = result[i];
+      var words = tweet.split(' ');
+      if (words.length > 1) {
         fs.appendFile(savedFile, tweet + '\n', function (err) {
           if (err) throw err;
           
         });
       }
     }
-
-
-    //console.log(result)
   });
 
 }

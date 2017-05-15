@@ -1,6 +1,6 @@
 {
   "name": "preprocess-tweets",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Clean tweets and makes them ready for training",
   "main": "app/index.js",
   "scripts": {
